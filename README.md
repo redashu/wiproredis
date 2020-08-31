@@ -306,6 +306,16 @@ Loaded plugins: amazon-id, rhui-lb, search-disabled-repos
 Resolving Dependencies
 
 ```
+## Installing PYthon redis module
+
+```
+[root@ip-172-31-76-56 ~]# pip3  install  redis 
+WARNING: Running pip install with root privileges is generally not a good idea. Try `pip3 install --user` instead.
+Collecting redis
+  Downloading https://files.pythonhosted.org/packages/a7/7c/24fb0511df653cf1a5d938d8f5d19802a88cef255706fdda242ff97e91b7/redis-3.5.3-py2.py3-none-any.whl (72kB)
+    100% |################################| 81kB 7.1MB/s 
+    
+ ```
 
 ```
 [root@ip-172-31-76-56 ~]# cat  ashuredis.py 

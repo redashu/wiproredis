@@ -295,3 +295,35 @@ OK
 
 ```
 
+# Redis via python 
+
+## installing python On your client machine  (windows/linux/mac)
+
+```
+[root@ip-172-31-76-56 ~]# yum  install python3
+Failed to set locale, defaulting to C
+Loaded plugins: amazon-id, rhui-lb, search-disabled-repos
+Resolving Dependencies
+
+```
+
+[root@ip-172-31-76-56 ~]# cat  ashuredis.py 
+import   redis
+import  time
+
+#  loading  driver in python to connect or load Redis
+
+# connecting to Remote Redis
+
+
+r_connect=redis.Redis(host='3.236.140.200',port=6379,password='Fallpass099')
+
+# if this will be connected  then lets try to  set keys 
+
+
+r_connect.set('name11',"ashutoshh singh")
+time.sleep(3)
+value=r_connect.get('name11')
+print(value)
+
+```

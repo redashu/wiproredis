@@ -190,3 +190,38 @@ tcp        0      0 127.0.0.1:6379          0.0.0.0:*               LISTEN      
 ```
 
 
+# Hashes 
+
+```
+3.236.140.200:6381> HMSET  emp  name jack email jack@gmail.com  contact 893556245 
+OK
+3.236.140.200:6381> keys * 
+1) "email"
+2) "emp"
+3) "name"
+4) "z"
+5) "name1"
+6) "y"
+7) "name00"
+8) "x"
+3.236.140.200:6381> HGET  emp  email
+"jack@gmail.com"
+3.236.140.200:6381> HGET  emp  name
+"jack"
+3.236.140.200:6381> HGETALL  emp
+1) "name"
+2) "jack"
+3) "email"
+4) "jack@gmail.com"
+5) "contact"
+6) "893556245"
+3.236.140.200:6381> HKEYS emp
+1) "name"
+2) "email"
+3) "contact"
+3.236.140.200:6381> HVALS  emp
+1) "jack"
+2) "jack@gmail.com"
+3) "893556245"
+
+```

@@ -43,3 +43,77 @@ OK
 
 ```
 
+## check and update if not present 
+
+```
+127.0.0.1:6379> set  accno  87744
+OK
+127.0.0.1:6379> 
+127.0.0.1:6379> keys * 
+1) "x"
+2) "accno"
+3) "y"
+4) "name"
+127.0.0.1:6379> get  accno
+"87744"
+127.0.0.1:6379> setnx  accno 90000
+(integer) 0
+127.0.0.1:6379> get  accno
+"87744"
+127.0.0.1:6379> setnx  accno1 90000
+(integer) 1
+127.0.0.1:6379> get  accno1
+"90000"
+
+```
+
+## deletion of keys
+
+```
+127.0.0.1:6379> del x 
+(integer) 1
+127.0.0.1:6379> keys *
+1) "accno1"
+2) "accno"
+3) "name"
+4) "y"
+
+
+```
+## string data with TTL 
+
+```
+127.0.0.1:6379> SETEX  passcheck 10 wipro1233
+OK
+127.0.0.1:6379> keys * 
+1) "accno1"
+2) "passcheck"
+3) "accno"
+4) "name"
+5) "y"
+127.0.0.1:6379> get passcheck
+(nil)
+127.0.0.1:6379> keys * 
+1) "accno1"
+2) "accno"
+3) "name"
+4) "y"
+127.0.0.1:6379> SETEX  passcheck 10 wipro1233
+OK
+127.0.0.1:6379> 
+127.0.0.1:6379> ttl  passcheck 
+(integer) 3
+127.0.0.1:6379> ttl  passcheck 
+(integer) 2
+127.0.0.1:6379> ttl  passcheck 
+(integer) 1
+127.0.0.1:6379> ttl  passcheck 
+(integer) -2
+127.0.0.1:6379> keys * 
+1) "accno1"
+2) "accno"
+3) "name"
+4) "y"
+
+```
+

@@ -334,3 +334,108 @@ value=r_connect.get('name11')
 print(value)
 
 ```
+
+# Changing default port 
+
+```
+[root@ip-172-31-71-19 ~]# grep -in port  /etc/redis.conf 
+83:# Accept connections on the specified port, default is 6379 (IANA #815344).
+84:# If port 0 is specified Redis will not listen on a TCP socket.
+85:port 6379
+158:# warning (only very important / critical messages are logged)
+
+---
+
+[root@ip-172-31-71-19 ~]# vi +85  /etc/redis.conf 
+[root@ip-172-31-71-19 ~]# grep -in port  /etc/redis.conf 
+83:# Accept connections on the specified port, default is 6379 (IANA #815344).
+84:# If port 0 is specified Redis will not listen on a TCP socket.
+85:port 6300
+
+
+```
+
+## changing port with Selinux managed
+
+```
+[root@ip-172-31-71-19 ~]# getenforce 
+Enforcing
+[root@ip-172-31-71-19 ~]# setenforce  0
+[root@ip-172-31-71-19 ~]# 
+[root@ip-172-31-71-19 ~]# getenforce 
+Permissive
+[root@ip-172-31-71-19 ~]# systemctl  restart  redis
+[root@ip-172-31-71-19 ~]# systemctl status redis
+● redis.service - Redis persistent key-value database
+   Loaded: loaded (/usr/lib/systemd/system/redis.service; enabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: active (running) since Mon 2020-08-31 09:49:48 UTC; 3s ago
+  Process: 18558 ExecStop=/usr/libexec/redis-shutdown (code=exited, status=0/SUCCESS)
+ Main PID: 18593 (redis-server)
+   CGroup: /system.slice/redis.service
+           └─18593 /usr/bin/redis-server 0.0.0.0:6381
+
+Aug 31 09:49:48 ip-172-31-71-19.ec2.internal systemd[1]: Starting Redis persistent key-value database...
+Aug 31 09:49:48 ip-172-31-71-19.ec2.internal systemd[1]: Started Redis persistent key-value database.
+[root@ip-172-31-71-19 ~]# setenforce 1
+[root@ip-172-31-71-19 ~]# getenforce 
+Enforcing
+[root@ip-172-31-71-19 ~]# systemctl  restart  redis
+[root@ip-172-31-71-19 ~]# systemctl status redis
+● redis.service - Redis persistent key-value database
+   Loaded: loaded (/usr/lib/systemd/system/redis.service; enabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: failed (Result: exit-code) since Mon 2020-08-31 09:50:03 UTC; 3s ago
+  Process: 18605 ExecStop=/usr/libexec/redis-shutdown (code=exited, status=0/SUCCESS)
+  Process: 18620 ExecStart=/usr/bin/redis-server /etc/redis.conf --supervised systemd (code=exited, status=1/FAILURE)
+ Main PID: 18620 (code=exited, status=1/FAILURE)
+
+Aug 31 09:50:03 ip-172-31-71-19.ec2.internal systemd[1]: Stopped Redis persistent key-value database.
+Aug 31 09:50:03 ip-172-31-71-19.ec2.internal systemd[1]: Starting Redis persistent key-value database...
+Aug 31 09:50:03 ip-172-31-71-19.ec2.internal systemd[1]: Started Redis persistent key-value database.
+Aug 31 09:50:03 ip-172-31-71-19.ec2.internal systemd[1]: redis.service: main process exited, code=exited, status=1/FAILURE
+Aug 31 09:50:03 ip-172-31-71-19.ec2.internal systemd[1]: Unit redis.service entered failed state.
+Aug 31 09:50:03 ip-172-31-71-19.ec2.internal systemd[1]: redis.service failed.
+
+```
+## selinux allowed Port 
+
+```
+[root@ip-172-31-71-19 ~]# semanage  port -l    |    grep -i redis
+redis_port_t                   tcp      6379, 16379, 26379
+[root@ip-172-31-71-19 ~]# 
+
+
+===
+[root@ip-172-31-71-19 ~]# semanage port -a -t redis_port_t -p tcp 6381
+[root@ip-172-31-71-19 ~]# semanage  port -l    |    grep -i redis
+redis_port_t                   tcp      6381, 6379, 16379, 26379
+
+```
+
+# cross check
+
+```
+[root@ip-172-31-71-19 ~]# getenforce 
+Enforcing
+[root@ip-172-31-71-19 ~]# systemctl restart  redis
+[root@ip-172-31-71-19 ~]# netstat -nlpt
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:6381            0.0.0.0:*               LISTEN      18642/redis-server  
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      19923/sshd          
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      20036/master        
+tcp6       0      0 :::22                   :::*                    LISTEN      19923/sshd          
+tcp6       0      0 ::1:25                  :::*                    LISTEN      20036/master        
+[root@ip-172-31-71-19 ~]# systemctl status redis
+● redis.service - Redis persistent key-value database
+   Loaded: loaded (/usr/lib/systemd/system/redis.service; enabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: active (running) since Mon 2020-08-31 09:55:01 UTC; 14s ago
+  Process: 18605 ExecStop=/usr/libexec/redis-shutdown (code=exited, status=0/SUCCESS)
+  
+  ```
+  

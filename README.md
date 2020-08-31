@@ -106,3 +106,36 @@ baseurl=http://172.16.52.25/Redis
 gpgcheck=0
 
 ```
+
+## Installing  Redis
+
+```
+yum  install  redis
+
+---
+
+[root@ip-172-31-71-19 ~]# rpm   -q    redis 
+redis-3.2.12-2.el7.x86_64
+[root@ip-172-31-71-19 ~]# rpm  -qi  redis 
+Name        : redis
+Version     : 3.2.12
+Release     : 2.el7
+Architecture: x86_64
+Install Date: Mon Aug 31 05:55:04 2020
+Group       : Unspecified
+Size        : 1424583
+License     : BSD
+Signature   : RSA/SHA256, Fri Oct 26 07:10:06 2018, Key ID 6a2faea2352c64e5
+Source RPM  : redis-3.2.12-2.el7.src.rpm
+Build Date  : Fri Oct 26 07:05:47 2018
+Build Host  : buildhw-10.phx2.fedoraproject.org
+Relocations : (not relocatable)
+Packager    : Fedora Project
+Vendor      : Fedora Project
+URL         : http://redis.io
+Bug URL     : https://bugz.fedoraproject.org/redis
+Summary     : A persistent key-value database
+Description :
+
+
+```

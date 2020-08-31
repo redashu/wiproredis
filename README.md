@@ -139,3 +139,54 @@ Description :
 
 
 ```
+
+## Starting Redis DB Engine 
+
+```
+[root@ip-172-31-71-19 ~]# systemctl   start  redis
+[root@ip-172-31-71-19 ~]# systemctl   status redis
+● redis.service - Redis persistent key-value database
+   Loaded: loaded (/usr/lib/systemd/system/redis.service; disabled; vendor preset: disabled)
+  Drop-In: /etc/systemd/system/redis.service.d
+           └─limit.conf
+   Active: active (running) since Mon 2020-08-31 06:25:04 UTC; 8s ago
+ Main PID: 17992 (redis-server)
+   CGroup: /system.slice/redis.service
+           └─17992 /usr/bin/redis-server 127.0.0.1:6379
+
+Aug 31 06:25:04 ip-172-31-71-19.ec2.internal systemd[1]: Starting Redis persistent key-value database...
+Aug 31 06:25:04 ip-172-31-71-19.ec2.internal systemd[1]: Started Redis persistent key-value database.
+
+```
+
+## auto start on reboot
+
+```
+[root@ip-172-31-71-19 ~]# systemctl   enable  redis
+Created symlink from /etc/systemd/system/multi-user.target.wants/redis.service to /usr/lib/systemd/system/redis.service.
+```
+
+## checking port binding for Redis
+
+```
+[root@ip-172-31-71-19 ~]# netstat  -nlpt
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 127.0.0.1:6379          0.0.0.0:*               LISTEN      17992/redis-server  
+
+```
+
+# Redis client connect
+
+## Local client 
+
+```
+[root@ip-172-31-71-19 ~]# redis-cli  
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+127.0.0.1:6379> 
+
+
+```
+
+

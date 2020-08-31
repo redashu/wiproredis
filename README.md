@@ -439,3 +439,100 @@ tcp6       0      0 ::1:25                  :::*                    LISTEN      
   
   ```
   
+## checking lenght or associated values with key 
+
+```
+[root@ip-172-31-71-19 ~]# redis-cli  -h 172.31.71.19  -p 6381 
+172.31.71.19:6381> 
+172.31.71.19:6381> 
+172.31.71.19:6381> auth Fallpass099
+OK
+172.31.71.19:6381> keys * 
+1) "name00"
+172.31.71.19:6381> keys na* 
+1) "name00"
+172.31.71.19:6381> set name1  ashu
+OK
+172.31.71.19:6381> keys na* 
+1) "name1"
+2) "name00"
+172.31.71.19:6381> set  y  "hello world this is my name "
+OK
+172.31.71.19:6381> keys na* 
+1) "name1"
+2) "name00"
+172.31.71.19:6381> keys *
+1) "y"
+2) "name1"
+3) "name00"
+172.31.71.19:6381> 
+172.31.71.19:6381> STRLEN name1
+(integer) 4
+172.31.71.19:6381> STRLEN y
+(integer) 28
+
+```
+
+## some maths operation 
+
+```
+172.31.71.19:6381> MSET x 100 y 200 z  5
+OK
+172.31.71.19:6381> keys * 
+1) "z"
+2) "name1"
+3) "y"
+4) "name00"
+5) "x"
+172.31.71.19:6381> get x
+"100"
+172.31.71.19:6381> INCR x
+(integer) 101
+172.31.71.19:6381> INCR x
+(integer) 102
+172.31.71.19:6381> INCR x
+(integer) 103
+172.31.71.19:6381> INCR x
+(integer) 104
+172.31.71.19:6381> get  x
+"104"
+172.31.71.19:6381> DECR x
+(integer) 103
+172.31.71.19:6381> DECR x
+(integer) 102
+172.31.71.19:6381> DECR x
+(integer) 101
+172.31.71.19:6381> DECR x
+(integer) 100
+172.31.71.19:6381> DECR x
+(integer) 99
+172.31.71.19:6381> get x
+"99"
+172.31.71.19:6381> INCRBY x  200
+(integer) 299
+172.31.71.19:6381> get x
+"299"
+172.31.71.19:6381> DECRBY x 100
+(integer) 199
+172.31.71.19:6381> get x
+"199"
+172.31.71.19:6381> 
+172.31.71.19:6381> set  email  ashutoshh@
+OK
+172.31.71.19:6381> 
+172.31.71.19:6381> get  email
+"ashutoshh@"
+172.31.71.19:6381> APPEND email  linux.com
+(integer) 19
+172.31.71.19:6381> get  email
+"ashutoshh@linux.com"
+172.31.71.19:6381> 
+172.31.71.19:6381> 
+172.31.71.19:6381> set name  ashutoshh
+OK
+172.31.71.19:6381> APPEND name  " singh"
+(integer) 15
+172.31.71.19:6381> get name
+"ashutoshh singh"
+
+```

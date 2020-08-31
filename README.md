@@ -74,3 +74,35 @@ tmpfs           379M     0  379M   0% /run/user/1000
 
 ```
 
+## checking existing installation 
+
+```
+[root@ip-172-31-71-19 ~]# rpm  -qa    |    grep -i  redis
+[root@ip-172-31-71-19 ~]# 
+[root@ip-172-31-71-19 ~]# 
+[root@ip-172-31-71-19 ~]# 
+[root@ip-172-31-71-19 ~]# rpm  -qa  redis* 
+[root@ip-172-31-71-19 ~]# 
+
+```
+
+## Configure Yum offline / online. Repo 
+
+### yum udpate if you have internet connected
+
+```
+[root@ip-172-31-71-19 ~]# yum  update  -y
+
+```
+
+### chaning directory and create yum client 
+
+```
+[root@ip-172-31-71-19 ~]# cd   /etc/yum.repos.d/
+
+[root@ip-172-31-71-19 yum.repos.d]# cat  ashu.repo 
+[redis]
+baseurl=http://172.16.52.25/Redis
+gpgcheck=0
+
+```

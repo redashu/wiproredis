@@ -307,6 +307,7 @@ Resolving Dependencies
 
 ```
 
+```
 [root@ip-172-31-76-56 ~]# cat  ashuredis.py 
 import   redis
 import  time
@@ -317,10 +318,6 @@ import  time
 
 
 r_connect=redis.Redis(host='3.236.140.200',port=6379,password='Fallpass099')
-
-# if this will be connected  then lets try to  set keys 
-
-
 r_connect.set('name11',"ashutoshh singh")
 time.sleep(3)
 value=r_connect.get('name11')

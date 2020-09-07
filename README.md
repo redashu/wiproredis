@@ -90,3 +90,23 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 834f842037af        redis               "docker-entrypoint.s…"   53 seconds ago      Up 52 seconds       6379/tcp            ashuredis1
 
 ```
+
+## inserting data into redis container
+
+```
+[wipro@ip-172-31-79-183 ~]$ docker exec -it  ashuredis1  bash
+root@834f842037af:/data# 
+root@834f842037af:/data# 
+root@834f842037af:/data# 
+root@834f842037af:/data# redis-cli 
+127.0.0.1:6379> set name ashutoshh
+OK
+127.0.0.1:6379> HSET  employee  name ashutoshh email ashutoshh@linux.com contact 9509957594
+(integer) 3
+127.0.0.1:6379> 
+127.0.0.1:6379> keys * 
+1) "employee"
+2) "name"
+127.0.0.1:6379> 
+
+```

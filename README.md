@@ -110,3 +110,18 @@ OK
 127.0.0.1:6379> 
 
 ```
+
+## creating docker image of Redis
+
+```
+  43  docker pull centos:7
+   44  docker run -it  ashuredis2  bash 
+   45  docker run -it  --name ashuredis2 centos:7  bash 
+   46  history 
+   47  docker  ps
+   48  docker ps  -a
+   49  docker  commit -m  "my redis image"  8a3a5623beec   redis:ashuv1 
+   50  docker  images
+
+```
+

@@ -120,7 +120,7 @@ OK
    46  history 
    47  docker  ps
    48  docker ps  -a
-   49  docker  commit -m  "my redis image"  8a3a5623beec   redis:ashuv1 
+   49  docker commit ashuredis2   redis:wiprov1
    50  docker  images
 
 ```

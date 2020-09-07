@@ -125,3 +125,9 @@ OK
 
 ```
 
+## container redis for external world
+
+```
+docker run  --name  ashuredis1  -itd -v  /home/wipro/ashu/:/var/lib/redis  -p 1234:6379  redis
+
+```

@@ -44,3 +44,58 @@ tail  -f  /var/log/redis/redis.log
 
 ```
 
+# Benchmarking 
+
+```
+  117  redis-benchmark  --help
+  118  redis-benchmark 
+  119  redis-benchmark  -n   1000000
+  120  redis-benchmark  --help
+  121  redis-benchmark -h 127.0.0.1 -p 6379 -n 100000 -c 20
+  122  history 
+  123  redis-benchmark  --help
+  124  redis-benchmark -t set -n 1000000 -r 100000000
+  125  redis-benchmark -t ping,set,get -n 100000 --csv
+
+```
+
+## Backup 
+
+```
+ 129  cd /var/lib/redis/
+  130  ls
+  131  ls  -lh dump.rdb 
+  132  mkdir  /opt/day1backup
+  133  cp -rpvf  /var/lib/redis/   /opt/day1backup/
+  134  rdiff-backup
+  135  yum  install  rdiff-backup -y
+  136  history 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# rdiff-backup  --preserve-numerical-ids  /var/lib/redis/  /opt/day2 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# cd /opt/
+[root@ip-172-31-79-183 opt]# ls
+containerd  day1backup  day2
+[root@ip-172-31-79-183 opt]# cd day1backup/
+[root@ip-172-31-79-183 day1backup]# ls
+redis
+[root@ip-172-31-79-183 day1backup]# cd redis/
+[root@ip-172-31-79-183 redis]# ls
+dump.rdb
+[root@ip-172-31-79-183 redis]# cd  ../..
+[root@ip-172-31-79-183 opt]# ls
+containerd  day1backup  day2
+[root@ip-172-31-79-183 opt]# cd  day2
+[root@ip-172-31-79-183 day2]# ls
+dump.rdb  rdiff-backup-data
+[root@ip-172-31-79-183 day2]# ls rdiff-backup-data/
+access_control_lists.2020-09-07T11:29:25Z.snapshot    file_statistics.2020-09-07T11:29:25Z.data.gz
+backup.log                                            increments
+chars_to_quote                                        mirror_metadata.2020-09-07T11:29:25Z.snapshot.gz
+current_mirror.2020-09-07T11:29:25Z.data              session_statistics.2020-09-07T11:29:25Z.data
+error_log.2020-09-07T11:29:25Z.data                   special_escapes
+extended_attributes.2020-09-07T11:29:25Z.snapshot.gz
+
+```
+

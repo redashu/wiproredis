@@ -24,3 +24,33 @@ OK
 
 ```
 
+## rename dangerious commands
+
+```
+[root@ip-172-31-79-183 ~]# grep -in  rename  /etc/redis.conf  
+299:# security of read only slaves using 'rename-command' to shadow all the
+485:# environment. For instance the CONFIG command may be renamed into something
+491:# rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52
+
+494:rename-command  CONFIG  ashucfg 
+
+```
+
+## Few more commands torenme
+
+
+```
+[root@ip-172-31-79-183 ~]# grep -in  rename  /etc/redis.conf
+[root@ip-172-31-79-183 ~]# grep -in  rename  /etc/redis.conf
+299:# security of read only slaves using 'rename-command' to shadow all the
+485:# environment. For instance the CONFIG command may be renamed into something
+491:# rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52
+494:rename-command  CONFIG  ashucfg 
+495:rename-command  FLUSHALL   ""
+496:rename-command  FLUSHDB   ""
+503:# rename-command CONFIG ""
+886:#  g     Generic commands (non-type specific) like DEL, EXPIRE, RENAME, ...
+
+
+```
+

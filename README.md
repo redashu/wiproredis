@@ -99,3 +99,34 @@ extended_attributes.2020-09-07T11:29:25Z.snapshot.gz
 
 ```
 
+# Restoring it 
+
+```
+[root@ip-172-31-79-183 redis]# cd  /opt/day1backup/
+[root@ip-172-31-79-183 day1backup]# ls
+redis
+[root@ip-172-31-79-183 day1backup]# cd redis/
+[root@ip-172-31-79-183 redis]# ls
+dump.rdb
+[root@ip-172-31-79-183 redis]# cp -rvf dump.rdb   /var/lib/redis/
+'dump.rdb' -> '/var/lib/redis/dump.rdb'
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# cd  /var/lib/redis/
+[root@ip-172-31-79-183 redis]# ls  -l
+total 21388
+-rw-r--r--. 1 root root 21899340 Sep  7 11:32 dump.rdb
+[root@ip-172-31-79-183 redis]# chown redis:redis   dump.rdb 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# ls  -l
+total 21388
+-rw-r--r--. 1 redis redis 21899340 Sep  7 11:32 dump.rdb
+[root@ip-172-31-79-183 redis]# chmod  644  dump.rdb 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# 
+[root@ip-172-31-79-183 redis]# ls  -l
+total 21388
+-rw-r--r--. 1 redis redis 21899340 Sep  7 11:32 dump.rdb
+
+```

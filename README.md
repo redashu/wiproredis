@@ -97,3 +97,47 @@ OK
 127.0.0.1:6379> 
 
 ```
+
+## Fixing AOF 
+
+
+```
+[root@ip-172-31-78-206 redis]# redis-check-aof   --fix  /var/lib/redis/appendonly.aof 
+AOF analyzed: size=108, ok_up_to=108, diff=0
+AOF is valid
+
+```
+
+## Setting file descriptor in Linux 
+
+```
+[root@ip-172-31-78-206 redis]# cat  /etc/sysctl.conf 
+# sysctl settings are defined through files in
+# /usr/lib/sysctl.d/, /run/sysctl.d/, and /etc/sysctl.d/.
+#
+# Vendors settings live in /usr/lib/sysctl.d/.
+# To override a whole file, create a new file with the same in
+# /etc/sysctl.d/ and put new settings there. To override
+# only specific settings, add a file with a lexically later
+# name in /etc/sysctl.d/ and put new settings there.
+#
+# For more information, see sysctl.conf(5) and sysctl.d(5).
+
+fs.file-max=100000
+
+----
+sysctl -p
+
+```
+
+## setting max allowed client in Redis as well
+
+```
+[root@ip-172-31-78-206 redis]# grep -in maxclient  /etc/redis.conf 
+514: maxclients 100000
+
+
+--
+systemctl restart redis
+
+```

@@ -67,5 +67,27 @@ RedisLabs Enterprise Cluster installer.
 
 ```
 
+### Redis with RedisInsight 
+
+```
+  7  docker  pull  redis
+    8  docker pull redislabs/redisinsight
+
+```
+
+## Redis Db create 
+
+```
+ docker run -itd --name ashudb1  -v  /home/wipro/ashudb/:/var/lib/redis -p 1234:6379 redis
+ ```
+ 
+ ## Redis Insight creation 
+ 
+ ```
+  docker  run  -itd --name ashuinsght -v /home/wipro/ashuinsight/:/db  -p 9999:8001  redislabs/redisinsight
+  
+ ```
+ 
+ 
 
 

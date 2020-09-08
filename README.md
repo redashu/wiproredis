@@ -13,3 +13,23 @@
   <li> Configure redis replication server. </li>
    <li> Manage firewall and SElinux </li>
 </ol>
+
+
+## Master Node 
+
+```
+yum install redis -y
+yum reinstall redis -y
+
+systemctl stop firewalld
+systemctl disable firewalld
+  
+```
+
+### config backup 
+```
+cp /etc/redis.conf /etc/redis.bak
+```
+
+## ONly on master node 
+```

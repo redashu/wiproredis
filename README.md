@@ -199,4 +199,81 @@ masterauth Wipro@99cool
 
 ```
 
+# Docker Oriented CLuster 
+
+## pull docker image 
+```
+docker pull centos:7
+
+```
+
+## create container to install redis 6
+
+```
+docker run -it --name ashuc1 centos:7 bash
+```
+
+## doing update inside container 
+
+```
+[root@d53aa6aa363e /]# yum update
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: d36uatko69830t.cloudfront.net
+
+```
+## updating online Yum repo 
+
+```
+[root@d53aa6aa363e /]# yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm  -y
+Loaded plugins: fastestmirror, ovl
+epel-release-latest-7.noarch.rpm                                             |  15 kB  00:00:00     
+Examining /var/tmp/yum-root-p5l3rE/epel-release-latest-7.noarch.rpm: epel-release-7-12.noarch
+Marking /var/tmp/yum-root-p5l3rE/epel-release-latest-7.noarch.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package epel-release.noarch 0:7-12 will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+====================================================================================================
+ Package               Arch            Version         Repository                              Size
+====================================================================================================
+Installing:
+ epel-release          noarch          7-12            /epel-release-latest-7.noarch           24 k
+
+
+```
+## update remi repo 
+
+```
+[root@d53aa6aa363e /]# yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+Loaded plugins: fastestmirror, ovl
+remi-release-7.rpm                                                           |  20 kB  00:00:00     
+Examining /var/tmp/yum-root-p5l3rE/remi-release-7.rpm: remi-release-7.8-1.el7.remi.noarch
+Marking /var/tmp/yum-root-p5l3rE/remi-release-7.rpm to be installed
+Resolving Dependencies
+--> Running transaction check
+---> Package remi-release.noarch 0:7.8-1.el7.remi will be installed
+--> Finished Dependency Resolution
+
+Dependencies Resolved
+
+====================================================================================================
+ Package                Arch             Version                    Repository                 Size
+====================================================================================================
+Installing:
+ remi-release           noarch           7.8-1.el7.remi             /remi-release-7            28 k
+
+
+```
+
+## install Redis 6
+
+```
+yum --enablerepo=remi install redis -y
+
+```
+
 

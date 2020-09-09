@@ -130,8 +130,73 @@ Hint: Some lines were ellipsized, use -l to show in full.
 
 ```
 
+# Slave / Replica configuration 
 
+## Install and start Redis 
 
+```
+yum install redis -y
+systemctl start redis 
 
+```
+
+## change bInd address to 0.0.0.0
+
+```
+[root@ip-172-31-74-34 ~]# grep -in bind  /etc/redis.conf 
+48:# By default, if no "bind" configuration directive is specified, Redis listens
+51:# the "bind" configuration directive, followed by one or more IP addresses.
+55:# bind 192.168.1.100 10.0.0.1
+56:# bind 127.0.0.1 ::1
+59:# internet, binding to all the interfaces is dangerous and will expose the
+61:# following bind directive, that will force Redis to listen only into
+69:bind 0.0.0.0
+76:# 1) The server is not binding explicitly to a set of addresses using the
+77:#    "bind" directive.
+87:# are explicitly listed using the "bind" directive.
+```
+
+## connect to Master 
+
+### if Redis 3.x 
+
+```
+[root@ip-172-31-74-34 ~]# grep -i slaveof  /etc/redis.conf  
+# Master-Replica replication. Use replicaof to make a Redis instance a copy of
+# slaveof <masterip> <masterport>
+#    but to INFO, replicaOF, AUTH, PING, SHUTDOWN, REPLCONF, ROLE, CONFIG,
+
+```
+
+### if Redis is 5.x or alter 
+
+```
+[root@ip-172-31-74-34 ~]# grep -i replicaof  /etc/redis.conf  
+# Master-Replica replication. Use replicaof to make a Redis instance a copy of
+# replicaof <masterip> <masterport>
+#    but to INFO, replicaOF, AUTH, PING, SHUTDOWN, REPLCONF, ROLE, CONFIG,
+
+```
+
+### updating master password
+
+```
+#
+ replicaof 172.31.78.206  6379
+
+# If the master is password protected (using the "requirepass" configuration
+# directive below) it is possible to tell the replica to authenticate before
+# starting the replication synchronization process, otherwise the master will
+# refuse the replica request.
+#
+masterauth Wipro@99cool
+
+```
+
+## Now starting SErvice 
+```
+[root@ip-172-31-74-34 ~]# systemctl restart redis
+
+```
 
 

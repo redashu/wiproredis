@@ -14,3 +14,21 @@
 ## Redis modules and core product
 
 <img src="redismodules.png">
+
+# Redis cluster status
+
+<ul>
+  <li> general cluster  </li>
+  <li> Cluster with Master Node HA  </li>
+  <li> CLuster with sentinal </li>
+  
+ </ul>
+ 
+ ## General cluster 
+ 
+ <img src="general.png">
+ 
+ ## CLuster with master Node HA 
+ 
+ <img src="ha.png">
+ 

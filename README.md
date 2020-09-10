@@ -1,4 +1,4 @@
-# REdis final day3
+# REdis final day
 
 ## Comparasion b/w Redis 3.x & Redis 6.x 
 

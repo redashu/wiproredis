@@ -196,5 +196,99 @@ tcp6       0      0 ::1:25                  :::*                    LISTEN      
 ```
 
 ## Now setup Redis INsight 
+### installing. and starting DOcker 
+
 
 ```
+ 101  yum-config-manager     --add-repo     https://download.docker.com/linux/centos/docker-ce.repo
+  102   yum  install http://mirror.centos.org/centos/7/extras/x86_64/Packages/container-selinux-2.107-1.el7_6.noarch.rpm
+  103  sudo yum install docker-ce docker-ce-cli containerd.io
+  104  systemctl start  docker  
+
+```
+
+## starting redisinsight container in background mode
+
+```
+docker run -v redisinsight:/db -p 8001:8001 -d  redislabs/redisinsight:latest
+```
+
+## Browse and add redis database instance 
+
+### install support of Redis graph lib
+
+```
+ yum install libgomp
+  yum install  git  gcc  -y
+ 
+```
+
+## Cloning Redisgraph module from Github 
+
+```
+git  clone  https://github.com/RedisGraph/RedisGraph
+```
+
+## compile it 
+
+```
+[root@ip-172-31-66-52 ~]# cd  RedisGraph/
+[root@ip-172-31-66-52 RedisGraph]# ls
+Dockerfile  Dockerfile.alpine  Dockerfile.centos  LICENSE  Makefile  README.md  demo  deps  docs  lgtm.yml  mkdocs.yml  ramp.yml  src  tests
+[root@ip-172-31-66-52 RedisGraph]# make  
+make[1]: Entering directory `/root/RedisGraph/src'
+make[2]: Entering directory `/root/RedisGraph/deps/rax'
+make[2]: *** No targets specified and no makefile found.  Stop.
+make[2]: Leaving directory `/root/RedisGraph/deps/rax'
+make[1]: *** [../deps/rax/rax.o] Error 2
+make[1]: Leaving directory `/root/RedisGraph/src'
+make: *** [all] Error 2
+
+```
+
+# OR.  download precomipled module from Redis labs 
+
+## do this on the same node
+
+```
+[root@ip-172-31-66-52 ~]# mkdir  /etc/redis
+[root@ip-172-31-66-52 ~]# ls
+anaconda-ks.cfg  original-ks.cfg  redisgraph.zip
+[root@ip-172-31-66-52 ~]# mv  redisgraph.zip    /etc/redis
+[root@ip-172-31-66-52 ~]# ls
+anaconda-ks.cfg  original-ks.cfg
+[root@ip-172-31-66-52 ~]# ls   /etc/redis
+redisgraph.zip
+
+```
+
+
+## unzip that module 
+
+```
+[root@ip-172-31-66-52 redis]# ls
+redisgraph.zip
+[root@ip-172-31-66-52 redis]# unzip  redisgraph.zip 
+Archive:  redisgraph.zip
+  inflating: redisgraph.so           
+  inflating: module.json             
+[root@ip-172-31-66-52 redis]# ls
+module.json  redisgraph.so  redisgraph.zip
+
+```
+
+## adding redisGraph in Redis server
+
+```
+[root@ip-172-31-66-52 redis]# grep -in loadmodule   /etc/redis.conf 
+41:# it will abort. It is possible to use multiple loadmodule directives.
+43:# loadmodule /path/to/my_module.so
+44:# loadmodule /path/to/other_module.so
+[root@ip-172-31-66-52 redis]# vi   /etc/redis.conf  +44
+[root@ip-172-31-66-52 redis]# grep -in loadmodule   /etc/redis.conf 
+41:# it will abort. It is possible to use multiple loadmodule directives.
+43:# loadmodule /path/to/my_module.so
+44: loadmodule /etc/redis/redisgraph.so
+
+```
+

@@ -292,3 +292,19 @@ module.json  redisgraph.so  redisgraph.zip
 
 ```
 
+
+## Migration is similar to backup and restore but in different server
+
+```
+cd /var/lib/redis/
+
+## take backup and restore to next server 
+
+```
+## Restore Selinux and permission 
+```
+chmod 644 /var/lib/redis/* 
+chown redis:redis /var/lib/redis -R
+restorecon /var/lib/redis/ -R  # if SElinux is used by Vendor generally its but 
+
+```

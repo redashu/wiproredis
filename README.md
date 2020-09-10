@@ -32,3 +32,46 @@
  
  <img src="ha.png">
  
+# CLuster setup
+
+## Steps to perform in all Nodes 
+
+### change bind address
+```
+bind 0.0.0.0
+```
+
+### protected mode no
+```
+protected-mode no
+```
+
+### cluster enable yes 
+
+```
+cluster-enabled yes
+```
+
+### cluster config 
+
+```
+cluster-config-file nodes-6379.conf 
+```
+
+### Node timeout value
+
+```
+cluster-node-timeout 15000
+```
+
+### enable AOF
+
+```
+appendonly yes
+```
+
+### start redis service
+```
+systemctl start redis
+systemctl enable redis
+```

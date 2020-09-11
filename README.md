@@ -388,6 +388,47 @@ realtime =none                   extsz=4096   blocks=0, rtextents=0
 
 ```
 
+## For better throughput we need to plan performance tunning at OS LEvel Before installation of Redis 
 
+## Max connection parameter 
+
+```
+  26  sysctl  -w  net.core.somaxconn=65365
+   27  vi  /etc/rc.local 
+   28  chmod +x  /etc/rc.local 
+   29  sysctl -a
+   30  sysctl -a  |  grep -i somax
+   31  vi  /etc/sysctl.conf 
+   32  sysctl -p
+
+```
+
+## OOM configuration 
+
+```
+[root@ip-172-31-66-36 ~]# cat  /etc/sysctl.conf 
+# sysctl settings are defined through files in
+# /usr/lib/sysctl.d/, /run/sysctl.d/, and /etc/sysctl.d/.
+#
+# Vendors settings live in /usr/lib/sysctl.d/.
+# To override a whole file, create a new file with the same in
+# /etc/sysctl.d/ and put new settings there. To override
+# only specific settings, add a file with a lexically later
+# name in /etc/sysctl.d/ and put new settings there.
+#
+# For more information, see sysctl.conf(5) and sysctl.d(5).
+
+net.core.somaxconn = 65365
+vm.overcommit_memory = 1  #  to enable OOM in Linux kernel parameter 
+
+```
+
+## Disable THP 
+
+```
+vi /etc/rc.local
+echo never  >/sys/kernel/mm/transparent_hugepage/enabled
+
+```
 
 

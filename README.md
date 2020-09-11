@@ -432,3 +432,22 @@ echo never  >/sys/kernel/mm/transparent_hugepage/enabled
 ```
 
 
+## TIme to install Redis 
+
+```
+  48   yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm -y
+   49  yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+  
+   51  yum --enablerepo=remi install redis  -y
+   
+```
+
+## Mounting External storage to REdis 
+
+```
+mount -t xfs /dev/wiprovg/rd1 /var/lib/redis
+chown redis:redis /var/lib/redis
+
+echo  "/dev/wiprovg/rd1 /var/lib/redis xfs defaults 0  0"  >>/etc/fstab
+reboot
+```

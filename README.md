@@ -451,3 +451,24 @@ chown redis:redis /var/lib/redis
 echo  "/dev/wiprovg/rd1 /var/lib/redis xfs defaults 0  0"  >>/etc/fstab
 reboot
 ```
+
+## Performance tunning from Redis end
+
+```
+ 74  grep -in keepalive  /etc/redis.conf 
+   75  vi  +130  /etc/redis.conf 
+   76  top
+   77  grep -in keepalive  /etc/redis.conf 
+   78  ls
+   79  grep -in save  /etc/redis.conf 
+   80  grep -in compress /etc/redis.conf 
+   81  grep -in checksum  /etc/redis.conf 
+   82  vi  +330  /etc/redis.conf 
+   83  grep -in maxmemory  /etc/redis.conf 
+   84  vi  +859  /etc/redis.conf 
+   85  grep -in maxmemory  /etc/redis.conf 
+   86  grep -in loglevel /etc/redis.conf 
+   87  grep -in timeout  /etc/redis.conf 
+
+```
+

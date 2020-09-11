@@ -308,3 +308,86 @@ chown redis:redis /var/lib/redis -R
 restorecon /var/lib/redis/ -R  # if SElinux is used by Vendor generally its but 
 
 ```
+
+
+# Configure create and planning Redis multinode HA clsuter with Redislabs recommendation 
+
+
+## Attaching storage to persistent data of Redis  and using LVM 
+
+## Need to perform in master and Replication both instances
+
+## checking external storage 
+
+```
+[root@ip-172-31-66-36 ~]# lsblk 
+NAME    MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+xvda    202:0    0  10G  0 disk 
+|-xvda1 202:1    0   1M  0 part 
+`-xvda2 202:2    0  10G  0 part /
+xvdf    202:80   0  30G  0 disk 
+[root@ip-172-31-66-36 ~]# fdisk  -l
+WARNING: fdisk GPT support is currently new, and therefore in an experimental phase. Use at your own discretion.
+
+Disk /dev/xvda: 10.7 GB, 10737418240 bytes, 20971520 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: gpt
+Disk identifier: B45D8550-49E7-49A1-91C3-B53A07DFD691
+
+
+#         Start          End    Size  Type            Name
+ 1         2048         4095      1M  BIOS boot       
+ 2         4096     20971486     10G  Microsoft basic 
+
+Disk /dev/xvdf: 32.2 GB, 32212254720 bytes, 62914560 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+```
+
+## creating LVM of external storage 
+
+```
+[root@ip-172-31-68-57 ~]# yum  install lvm2 -y # if LVM tools not installed 
+
+--
+[root@ip-172-31-66-36 ~]# pvcreate   /dev/xvdf  
+  Physical volume "/dev/xvdf" successfully created.
+[root@ip-172-31-66-36 ~]# vgcreate wiprovg   /dev/xvdf  
+  Volume group "wiprovg" successfully created
+[root@ip-172-31-66-36 ~]# lvcreate --name  rd1  --size 9G   wiprovg  
+  Logical volume "rd1" created.
+[root@ip-172-31-66-36 ~]# pvs
+  PV         VG      Fmt  Attr PSize   PFree  
+  /dev/xvdf  wiprovg lvm2 a--  <30.00g <21.00g
+[root@ip-172-31-66-36 ~]# vgs
+  VG      #PV #LV #SN Attr   VSize   VFree  
+  wiprovg   1   1   0 wz--n- <30.00g <21.00g
+[root@ip-172-31-66-36 ~]# lvs
+  LV   VG      Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  rd1  wiprovg -wi-a----- 9.00g                                                    
+  
+  ```
+  
+  ## Formating with XFS. filesystem 
+  
+  ```
+  [root@ip-172-31-66-36 ~]# mkfs.xfs   /dev/wiprovg/rd1
+meta-data=/dev/wiprovg/rd1       isize=512    agcount=4, agsize=589824 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=2359296, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+
+```
+
+
+
+
